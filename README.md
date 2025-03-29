@@ -1,2 +1,2 @@
-# webpack-template
-My personal template to create webpack applications
+#Do It Know
+Todo List application made for The Odin Project.
