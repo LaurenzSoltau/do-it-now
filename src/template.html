@@ -20,13 +20,24 @@
                 </div>
                 <div class="sidebar-group">
                     <h2>My Projects</h2>
-                    <button class="add-button">Add Todo</button>
-                    <button class="container-button">Gym</button>
-                    <button class="container-button">Uni</button>
-                    <button class="container-button">Work</button>
+                    <button id="add-project" class="add-button">
+                        Add Project
+                    </button>
+                    <div class="project-container" id="project-container">
+                        <button class="container-button">Gym</button>
+                        <button class="container-button">Uni</button>
+                        <button class="container-button">Work</button>
+                    </div>
                 </div>
             </aside>
             <section></section>
         </div>
+        <dialog id="create-project">
+            <form>
+                <label for="name">name</label>
+                <input type="text" name="name" id="name" placeholder="Project Name" required maxlength="10">
+                <button>Create Project</button>
+            </form>
+        </dialog>
     </body>
 </html>

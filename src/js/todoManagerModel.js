@@ -18,6 +18,8 @@ const todoManager = (function () {
         }
     };
 
+    const getProjects = () => projects;
+
     const addTodo = function (todo, projectId) {
         todos.push(todo);
         const project = projects.find(
@@ -43,6 +45,7 @@ const todoManager = (function () {
     return {
         addProject,
         removeProject,
+        getProjects,
         addTodo,
         removeTodo,
         printTodos,
