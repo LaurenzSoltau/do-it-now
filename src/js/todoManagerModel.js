@@ -1,5 +1,3 @@
-import { createProject } from "./projectModel.js";
-
 const todoManager = (function () {
     const todos = [];
     const projects = [];
@@ -25,22 +23,30 @@ const todoManager = (function () {
         const project = projects.find(
             (project) => project.getId() === projectId
         );
-        project.addTodo(todo);
+        if (project !== undefined) project.addTodo(todo);
     };
 
     const removeTodo = function (todoId, projectId) {
         const index = todos.findIndex((todo) => todo.id === todoId);
-        todos.splice(index, 1);
+        if (index !== -1) todos.splice(index, 1);
         const project = projects.find(
             (project) => project.getId() === projectId
         );
-        project.removeTodo(todoId);
+        if (project !== undefined) project.removeTodo(todoId);
     };
 
     const printTodos = function () {
         console.log(todos);
         console.log(projects);
     };
+
+    return {
+        addProject,
+        removeProject,
+        addTodo,
+        removeTodo,
+        printTodos,
+    }
 })();
 
 export default todoManager;

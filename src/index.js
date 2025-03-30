@@ -1,2 +1,5 @@
 import "./css/styles.css"
-console.log("test");
+import todoManager from "./js/todoManagerModel.js";
+import { createTodo } from "./js/todoModel.js";
+import { createProject } from "./js/projectModel.js";
+

@@ -3,14 +3,12 @@ const createTodo = function (
     description,
     dueDate,
     priority,
-    creationDate
 ) {
     return {
         title,
         description,
         dueDate,
         priority,
-        creationDate,
         id: crypto.randomUUID(),
     }
 };

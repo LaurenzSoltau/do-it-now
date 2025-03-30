@@ -98,3 +98,7 @@ aside {
     background: none;
     border: none;
 }
+
+button:active {
+    color: blue;
+}
