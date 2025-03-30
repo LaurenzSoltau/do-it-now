@@ -16,9 +16,12 @@ const todoManager = (function () {
         for (const todo of project.getTodos()) {
             removeTodo(todo.id, projectId);
         }
+        projects.splice(index, 1);
     };
 
     const getProjects = () => projects;
+    
+    const getProject = (projectId) => projects.find(project => project.getId() === projectId); 
 
     const addTodo = function (todo, projectId) {
         todos.push(todo);
@@ -46,6 +49,7 @@ const todoManager = (function () {
         addProject,
         removeProject,
         getProjects,
+        getProject,
         addTodo,
         removeTodo,
         printTodos,

@@ -13,10 +13,24 @@ const appController = (function () {
         appView.renderProjects(projectContainer, todoManager.getProjects());
         createProjectModal.close();
     };
-
     createProjectForm.addEventListener("submit", handleCreateProjectModal);
 
+
+    const todoSection = document.querySelector("section");
     const projectContainer = document.querySelector("#project-container");
+    projectContainer.addEventListener("click", (e) => {
+        const projectDiv = e.target.closest(".project");
+        if (!projectDiv) return;
+        const projectId = projectDiv.dataset.id;
+        if (e.target.classList.contains("container-button")) {
+            appView.renderProjectTodos(todoSection, todoManager.getProject(projectId));
+        }
+        if (e.target.classList.contains("project-delete-button")) {
+            todoManager.removeProject(projectId);
+            appView.renderProjects(projectContainer, todoManager.getProjects());
+        }
+    })
+
     const addProjectButton = document.querySelector("#add-project");
     addProjectButton.addEventListener("click", () => {
         createProjectForm.reset();

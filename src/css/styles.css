@@ -94,6 +94,12 @@ aside {
     gap: 0.5rem;
 }
 
+.project-container {
+    align-self: stretch;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
 
 .container-button {
     background: none;
@@ -113,4 +119,9 @@ dialog {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+
+.project {
+    display: flex;
+    justify-content: space-between;
 }
