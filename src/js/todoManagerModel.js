@@ -31,6 +31,10 @@ const todoManager = (function () {
         if (project !== undefined) project.addTodo(todo);
     };
 
+    const getTodo = function (todoId) {
+        return todos.find(todo => todo.id === todoId);
+    }
+
     const removeTodo = function (todoId, projectId) {
         const index = todos.findIndex((todo) => todo.id === todoId);
         if (index !== -1) todos.splice(index, 1);
@@ -51,6 +55,7 @@ const todoManager = (function () {
         getProjects,
         getProject,
         addTodo,
+        getTodo,
         removeTodo,
         printTodos,
     }

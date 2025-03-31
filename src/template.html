@@ -30,13 +30,101 @@
                     </div>
                 </div>
             </aside>
-            <section></section>
+            <section class="main-wrapper">
+                <div class="header-container">
+
+                </div>
+                <div class="todo-container">
+                    <div class="todo">
+                        <div>
+                            <span class="todo-name">Task</span>
+                            <span class="todo-description">f fe fewf wef wefwefewf wef wefew fwehjehfwkjfhwe</span>
+                        </div> 
+                        <div>
+                            <span class="todo-due-date">20:10:</span>
+                            <span class="todo-priority">High</span>
+                            <button class="edit-todo">edit</button>
+                            <button class="delete-todo">delete</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
         <dialog id="create-project">
             <form>
                 <label for="name">name</label>
-                <input type="text" name="name" id="name" placeholder="Project Name" required maxlength="10">
+                <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Project Name"
+                    required
+                    maxlength="10"
+                />
                 <button>Create Project</button>
+            </form>
+        </dialog>
+        <dialog id="change-project">
+            <form>
+                <label for="name">name</label>
+                <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    required
+                    maxlength="10"
+                />
+                <button>Change Name</button>
+            </form>
+        </dialog>
+        <dialog id="create-todo">
+            <form>
+                <div class="form-row">
+                    <label for="name">Todo Name</label>
+                    <input type="text" name="name" id="name" required>
+                </div>
+                <div class="form-row">
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description"></textarea>
+                </div>
+                <div class="form-row">
+                    <label for="due-date">Due Date</label>
+                    <input type="date" id="due-date" name="due-date" required>
+                </div>
+                <div class="form-row">
+                    <label for="priority">Priority</label>
+                    <select name="priority" id="priority" required>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <button>Create Todo</button>
+            </form>
+        </dialog>
+        <dialog id="edit-todo">
+            <form>
+                <div class="form-row">
+                    <label for="name">Todo Name</label>
+                    <input type="text" name="name" id="name" required>
+                </div>
+                <div class="form-row">
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description"></textarea>
+                </div>
+                <div class="form-row">
+                    <label for="due-date">Due Date</label>
+                    <input type="date" id="due-date" name="due-date" required>
+                </div>
+                <div class="form-row">
+                    <label for="priority">Priority</label>
+                    <select name="priority" id="priority" required>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <button>Edit Todo</button>
             </form>
         </dialog>
     </body>
