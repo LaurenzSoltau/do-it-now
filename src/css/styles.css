@@ -87,7 +87,7 @@ aside {
     padding: 1.5rem;
 }
 
-.sidebar-group, .project-container{
+.sidebar-group, .project-container, .collection-container{
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -99,6 +99,7 @@ aside {
     align-items: stretch;
     justify-content: space-between;
 }
+
 
 .main-wrapper {
     padding: 2vh 2vw;
@@ -131,10 +132,6 @@ aside {
     display: flex;
     align-items: center;
     gap: 1rem;
-}
-
-.add-todo {
-
 }
 
 .container-button {
@@ -175,4 +172,8 @@ dialog {
 
 textarea {
     resize: none;
+}
+
+.checked {
+    text-decoration: line-through;
 }

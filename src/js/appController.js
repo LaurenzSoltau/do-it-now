@@ -111,6 +111,8 @@ const appController = (function () {
         if (!todoDiv) return;
         const todoId = todoDiv.dataset.id;
         const todo = todoManager.getTodo(todoId);
+        const projectId = e.target.closest(".todo-container").dataset.projectId;
+
         
         if (e.target.classList.contains("edit-todo")) {
             editTodoForm.querySelector("#name").value = todo.title;
@@ -118,8 +120,20 @@ const appController = (function () {
             editTodoForm.querySelector("#due-date").value = todo.dueDate;
             editTodoForm.querySelector("#priority").value = todo.priority;
             editTodoForm.dataset.todoId = todoId; 
-            editTodoForm.dataset.projectId = e.target.closest(".todo-container").dataset.projectId;
+            editTodoForm.dataset.projectId = projectId;
             editTodoModal.show();
+        }
+
+        if (e.target.classList.contains("delete-todo")) {
+            todoManager.removeTodo(todoId, projectId);
+            const project = todoManager.getProject(projectId);
+            appView.renderTodos(e.target.closest(".todo-container"), project.getTodos());
+        }
+
+        if (e.target.classList.contains("checkbox")) {
+            todo.checked = !todo.checked;
+            const project = todoManager.getProject(projectId);
+            appView.renderTodos(e.target.closest(".todo-container"), project.getTodos());
         }
 
     });

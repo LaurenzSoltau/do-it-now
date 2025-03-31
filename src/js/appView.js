@@ -1,4 +1,5 @@
-import { createTodo } from "./todoModel";
+import checkBoxUnchecked from "./../assets/checkbox_unchecked.svg";
+import checkBoxChecked from "./../assets/checkbox_checked.svg";
 
 const appView = (function () {
     function createButton(text, className) {
@@ -65,11 +66,19 @@ const appView = (function () {
         todoDiv.dataset.id = todo.id;
 
         const firstSubDiv = document.createElement("div");
+        const checkBox = document.createElement("img");
+        if (todo.checked) {
+            checkBox.src = checkBoxChecked;
+        } else {
+            checkBox.src = checkBoxUnchecked;
+        }
+        checkBox.classList.add("checkbox");
         const nameSpan = createSpan(todo.title, "todo-name");
         const descriptionSpan = createSpan(
             todo.description,
             "todo-description"
         );
+        firstSubDiv.appendChild(checkBox);
         firstSubDiv.appendChild(nameSpan);
         firstSubDiv.appendChild(descriptionSpan);
         todoDiv.appendChild(firstSubDiv);
@@ -84,6 +93,11 @@ const appView = (function () {
         secondSubDiv.appendChild(editButton);
         secondSubDiv.appendChild(deleteButton);
         todoDiv.appendChild(secondSubDiv);
+        if (todo.checked) {
+            todoDiv.classList.add("checked");
+        } else {
+            todoDiv.classList.remove("checked");
+        }
 
         return todoDiv;
     }

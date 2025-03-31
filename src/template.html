@@ -13,10 +13,12 @@
             <aside>
                 <div class="sidebar-group">
                     <h2>Home</h2>
-                    <button class="add-button">Add Todo</button>
-                    <button class="container-button">All</button>
-                    <button class="container-button">Today</button>
-                    <button class="container-button">Done</button>
+                    <div class="collection-container">
+                        <button class="add-button">Add Todo</button>
+                        <button id="all" class="container-button">All</button>
+                        <button id="today" class="container-button">Today</button>
+                        <button id="done" class="container-button">Done</button>
+                    </div>
                 </div>
                 <div class="sidebar-group">
                     <h2>My Projects</h2>
@@ -25,29 +27,13 @@
                     </button>
                     <div class="project-container" id="project-container">
                         <div class="project">
-                            <button class="container-button">Gym</button>
                         </div>
                     </div>
                 </div>
             </aside>
             <section class="main-wrapper">
-                <div class="header-container">
-
-                </div>
-                <div class="todo-container">
-                    <div class="todo">
-                        <div>
-                            <span class="todo-name">Task</span>
-                            <span class="todo-description">f fe fewf wef wefwefewf wef wefew fwehjehfwkjfhwe</span>
-                        </div> 
-                        <div>
-                            <span class="todo-due-date">20:10:</span>
-                            <span class="todo-priority">High</span>
-                            <button class="edit-todo">edit</button>
-                            <button class="delete-todo">delete</button>
-                        </div>
-                    </div>
-                </div>
+                <div class="header-container"></div>
+                <div class="todo-container"></div>
             </section>
         </div>
         <dialog id="create-project">
@@ -81,7 +67,7 @@
             <form>
                 <div class="form-row">
                     <label for="name">Todo Name</label>
-                    <input type="text" name="name" id="name" required>
+                    <input type="text" name="name" id="name" required />
                 </div>
                 <div class="form-row">
                     <label for="description">Description</label>
@@ -89,7 +75,7 @@
                 </div>
                 <div class="form-row">
                     <label for="due-date">Due Date</label>
-                    <input type="date" id="due-date" name="due-date" required>
+                    <input type="date" id="due-date" name="due-date" required />
                 </div>
                 <div class="form-row">
                     <label for="priority">Priority</label>
@@ -106,7 +92,7 @@
             <form>
                 <div class="form-row">
                     <label for="name">Todo Name</label>
-                    <input type="text" name="name" id="name" required>
+                    <input type="text" name="name" id="name" required />
                 </div>
                 <div class="form-row">
                     <label for="description">Description</label>
@@ -114,7 +100,7 @@
                 </div>
                 <div class="form-row">
                     <label for="due-date">Due Date</label>
-                    <input type="date" id="due-date" name="due-date" required>
+                    <input type="date" id="due-date" name="due-date" required />
                 </div>
                 <div class="form-row">
                     <label for="priority">Priority</label>
