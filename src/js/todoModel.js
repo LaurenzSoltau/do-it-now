@@ -1,4 +1,4 @@
-const createTodo = function (title, description, dueDate, priority) {
+const createTodo = function (title, description, dueDate, priority, projectId) {
     let checked = false;
     return {
         title,
@@ -7,6 +7,7 @@ const createTodo = function (title, description, dueDate, priority) {
         priority,
         id: crypto.randomUUID(),
         checked,
+        projectId,
     };
 };
 

@@ -2,46 +2,46 @@ const todoManager = (function () {
     const todos = [];
     const projects = [];
 
+    const getAll = () => todos;
+
     const addProject = function (project) {
         projects.push(project);
     };
 
     const removeProject = function (projectId) {
-        const project = projects.find(
-            (project) => project.getId() === projectId
-        );
         const index = projects.findIndex(
             (project) => project.getId() === projectId
         );
-        for (const todo of project.getTodos()) {
-            removeTodo(todo.id, projectId);
-        }
         projects.splice(index, 1);
+        for (let i = 0; i < todos.length; i++) {
+            if (todos[i].projectId === projectId) {
+                todos.splice(i, 1);
+            }
+        }
+
     };
 
     const getProjects = () => projects;
+
+    const getProject = (projectId) => {
+        return projects.find(project => project.getId() === projectId);
+    }
     
-    const getProject = (projectId) => projects.find(project => project.getId() === projectId); 
+    const getProjectTodos = (projectId) => {
+        return todos.filter(todo => todo.projectId === projectId);
+    }
 
     const addTodo = function (todo, projectId) {
         todos.push(todo);
-        const project = projects.find(
-            (project) => project.getId() === projectId
-        );
-        if (project !== undefined) project.addTodo(todo);
     };
 
     const getTodo = function (todoId) {
         return todos.find(todo => todo.id === todoId);
     }
 
-    const removeTodo = function (todoId, projectId) {
+    const removeTodo = function (todoId) {
         const index = todos.findIndex((todo) => todo.id === todoId);
         if (index !== -1) todos.splice(index, 1);
-        const project = projects.find(
-            (project) => project.getId() === projectId
-        );
-        if (project !== undefined) project.removeTodo(todoId);
     };
 
     const printTodos = function () {
@@ -54,10 +54,12 @@ const todoManager = (function () {
         removeProject,
         getProjects,
         getProject,
+        getProjectTodos,
         addTodo,
         getTodo,
         removeTodo,
         printTodos,
+        getAll,
     }
 })();
 

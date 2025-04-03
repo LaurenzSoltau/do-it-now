@@ -1,5 +1,6 @@
 import checkBoxUnchecked from "./../assets/checkbox_unchecked.svg";
 import checkBoxChecked from "./../assets/checkbox_checked.svg";
+import todoManager from "./todoManagerModel";
 
 const appView = (function () {
     function createButton(text, className) {
@@ -13,7 +14,7 @@ const appView = (function () {
         function createProjectRow(name, projectId) {
             const projectDiv = document.createElement("div");
             projectDiv.classList.add("project");
-            projectDiv.dataset.id = projectId;
+            projectDiv.dataset.projectId = projectId;
 
             const projectButton = createButton(name, "container-button");
             projectDiv.appendChild(projectButton);
@@ -40,6 +41,15 @@ const appView = (function () {
         }
     };
 
+    function createCollectionHeader(title) {
+        const wrapper = document.createElement("div");
+        wrapper.classList.add("project-header");
+        const h1 = document.createElement("h1");
+        h1.textContent = title;
+        wrapper.appendChild(h1);
+        return wrapper;
+    }
+
     function createProjectTodosHeader(title, projectId) {
         const wrapper = document.createElement("div");
         wrapper.classList.add("project-header");
@@ -63,7 +73,7 @@ const appView = (function () {
         }
         const todoDiv = document.createElement("div");
         todoDiv.classList.add("todo");
-        todoDiv.dataset.id = todo.id;
+        todoDiv.dataset.todoId = todo.id;
 
         const firstSubDiv = document.createElement("div");
         const checkBox = document.createElement("img");
@@ -113,24 +123,37 @@ const appView = (function () {
     const renderProjectTodos = function (container, project) {
         const headerContainer = container.querySelector(".header-container");
         headerContainer.textContent = "";
+        const projectId = project.getId();
         const header = createProjectTodosHeader(
             project.getName(),
-            project.getId()
+            projectId
         );
         headerContainer.append(header);
 
         const todoContainer = container.querySelector(".todo-container");
-        todoContainer.dataset.projectId = project.getId();
+        todoContainer.dataset.projectId = projectId; 
+        const todos = todoManager.getProjectTodos(projectId);
         renderTodos(
             todoContainer,
-            project.getTodos()
+            todos,
         );
     };
+
+    const renderCollectionTodos = function (container, collection, collectionName) {
+        const headerContainer = container.querySelector(".header-container");
+        headerContainer.textContent = "";
+        const header = createCollectionHeader(collectionName);
+        headerContainer.appendChild(header);
+        
+        const todoContainer = container.querySelector(".todo-container");
+        renderTodos(todoContainer, collection);
+    }
 
     return {
         renderProjects,
         renderProjectTodos,
         renderTodos,
+        renderCollectionTodos,
     };
 })();
 
