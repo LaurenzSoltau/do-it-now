@@ -8,10 +8,10 @@ const appController = (function () {
         ALL: "all",
         TODAY: "today",
         DONE: "done",
-        NONE: "none"
-    }
+        NONE: "none",
+    };
     let activeCollection = collection.NONE;
-    
+
     function getCurrentTodos(projectId) {
         let todos;
         switch (activeCollection) {
@@ -21,7 +21,7 @@ const appController = (function () {
             case collection.TODAY:
                 todos = todoManager.getToday();
                 break;
-            case collection.DONE: 
+            case collection.DONE:
                 todos = todoManager.getDone();
                 break;
             default:
@@ -30,7 +30,6 @@ const appController = (function () {
 
         return todos;
     }
-
 
     const createProjectModal = document.querySelector("#create-project");
     const createProjectForm = createProjectModal.querySelector("form");
@@ -130,7 +129,6 @@ const appController = (function () {
             collectionName = "Completed Tasks";
         }
 
-
         const todos = getCurrentTodos();
         appView.renderCollectionTodos(todoSection, todos, collectionName);
     });
@@ -156,6 +154,12 @@ const appController = (function () {
         if (e.target.classList.contains("project-delete-button")) {
             todoManager.removeProject(projectId);
             appView.renderProjects(projectContainer, todoManager.getProjects());
+            const currentProjectId = todoSection.querySelector(".todo-container").dataset.projectId;
+            if (currentProjectId === projectId) {
+                activeCollection = collection.ALL;
+                const todos = getCurrentTodos();
+                appView.renderCollectionTodos(todoSection, todos, "All Todos");
+            }
         }
         if (e.target.classList.contains("project-edit-button")) {
             editProjectForm.querySelector("input").value = todoManager

@@ -1,3 +1,5 @@
+const { isToday } = require("date-fns");
+
 const todoManager = (function () {
     const todos = [];
     const projects = [];
@@ -5,8 +7,12 @@ const todoManager = (function () {
     const getAll = () => todos;
 
     const getDone = () => {
-        return todos.filter(todo => todo.checked);
-    }
+        return todos.filter((todo) => todo.checked);
+    };
+
+    const getToday = () => {
+        return todos.filter(todo => isToday(todo.dueDate));
+    };
 
     const addProject = function (project) {
         projects.push(project);
@@ -22,26 +28,25 @@ const todoManager = (function () {
                 todos.splice(i, 1);
             }
         }
-
     };
 
     const getProjects = () => projects;
 
     const getProject = (projectId) => {
-        return projects.find(project => project.getId() === projectId);
-    }
-    
+        return projects.find((project) => project.getId() === projectId);
+    };
+
     const getProjectTodos = (projectId) => {
-        return todos.filter(todo => todo.projectId === projectId);
-    }
+        return todos.filter((todo) => todo.projectId === projectId);
+    };
 
     const addTodo = function (todo, projectId) {
         todos.push(todo);
     };
 
     const getTodo = function (todoId) {
-        return todos.find(todo => todo.id === todoId);
-    }
+        return todos.find((todo) => todo.id === todoId);
+    };
 
     const removeTodo = function (todoId) {
         const index = todos.findIndex((todo) => todo.id === todoId);
@@ -65,7 +70,8 @@ const todoManager = (function () {
         printTodos,
         getAll,
         getDone,
-    }
+        getToday,
+    };
 })();
 
 export default todoManager;
