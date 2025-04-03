@@ -1,19 +1,41 @@
 import appView from "./appView.js";
 import todoManager from "./todoManagerModel.js";
 import { createProject } from "./projectModel.js";
-import { createTodo } from "./todoModel.js"
+import { createTodo } from "./todoModel.js";
 
 const appController = (function () {
-    let currentTodos;
+    const collection = {
+        ALL: "all",
+        TODAY: "today",
+        DONE: "done",
+        NONE: "none"
+    }
+    let activeCollection = collection.NONE;
+    
+    function getCurrentTodos(projectId) {
+        let todos;
+        switch (activeCollection) {
+            case collection.ALL:
+                todos = todoManager.getAll();
+                break;
+            case collection.TODAY:
+                todos = todoManager.getToday();
+                break;
+            case collection.DONE: 
+                todos = todoManager.getDone();
+                break;
+            default:
+                todos = todoManager.getProjectTodos(projectId);
+        }
+
+        return todos;
+    }
+
 
     const createProjectModal = document.querySelector("#create-project");
     const createProjectForm = createProjectModal.querySelector("form");
     const editProjectModal = document.querySelector("#change-project");
     const editProjectForm = editProjectModal.querySelector("form");
-    const allButton = document.querySelector("#all");
-    allButton.addEventListener("click", e => {
-        appView.renderCollectionTodos(todoSection, todoManager.getAll(), "All Todos");
-    })
 
     const handleProjectModals = function (e) {
         e.preventDefault();
@@ -62,7 +84,13 @@ const appController = (function () {
 
         if (e.target === createTodoForm) {
             projectId = e.target.dataset.projectId;
-            const newTodo = createTodo(name, description, dueDate, priority, projectId);
+            const newTodo = createTodo(
+                name,
+                description,
+                dueDate,
+                priority,
+                projectId
+            );
             todoManager.addTodo(newTodo);
         }
 
@@ -76,22 +104,50 @@ const appController = (function () {
         }
 
         const todoContainer = document.querySelector(".todo-container");
-        appView.renderTodos(todoContainer, todoManager.getProjectTodos(projectId));
+        appView.renderTodos(
+            todoContainer,
+            todoManager.getProjectTodos(projectId)
+        );
         createTodoModal.close();
         editTodoModal.close();
     }
 
+    const collectionContainer = document.querySelector(".collection-container");
+    collectionContainer.addEventListener("click", (e) => {
+        if (!e.target.classList.contains("container-button")) return;
+        let collectionName;
+
+        if (e.target.id === "all") {
+            activeCollection = collection.ALL;
+            collectionName = "All Todos";
+        }
+        if (e.target.id === "today") {
+            activeCollection = collection.TODAY;
+            collectionName = "Tasks Due Today";
+        }
+        if (e.target.id === "done") {
+            activeCollection = collection.DONE;
+            collectionName = "Completed Tasks";
+        }
+
+
+        const todos = getCurrentTodos();
+        appView.renderCollectionTodos(todoSection, todos, collectionName);
+    });
+
     projectContainer.addEventListener("click", (e) => {
         const projectDiv = e.target.closest(".project");
         if (!projectDiv) return;
+        activeCollection = collection.NONE;
         const projectId = projectDiv.dataset.projectId;
         if (e.target.classList.contains("container-button")) {
+            activeCollection = collection.NONE;
             appView.renderProjectTodos(
                 todoSection,
                 todoManager.getProject(projectId)
             );
             dynamicAddTodoButton = document.querySelector(".add-todo");
-            dynamicAddTodoButton.addEventListener("click", e => {
+            dynamicAddTodoButton.addEventListener("click", (e) => {
                 createTodoForm.reset();
                 createTodoForm.dataset.projectId = projectId;
                 createTodoModal.show();
@@ -110,40 +166,35 @@ const appController = (function () {
         }
     });
 
-
     todoSection.addEventListener("click", (e) => {
         const todoDiv = e.target.closest(".todo");
         if (!todoDiv) return;
         const todoId = todoDiv.dataset.todoId;
         const todo = todoManager.getTodo(todoId);
         const projectId = todo.projectId;
+        const container = e.target.closest(".todo-container");
 
-        
         if (e.target.classList.contains("edit-todo")) {
             editTodoForm.querySelector("#name").value = todo.title;
             editTodoForm.querySelector("#description").value = todo.description;
             editTodoForm.querySelector("#due-date").value = todo.dueDate;
             editTodoForm.querySelector("#priority").value = todo.priority;
-            editTodoForm.dataset.todoId = todoId; 
+            editTodoForm.dataset.todoId = todoId;
             editTodoForm.dataset.projectId = projectId;
             editTodoModal.show();
         }
 
         if (e.target.classList.contains("delete-todo")) {
             todoManager.removeTodo(todoId);
-            const container = e.target.closest(".todo-container");
-            const todos = todoManager.getProjectTodos(projectId);
+            const todos = getCurrentTodos(projectId);
             appView.renderTodos(container, todos);
         }
 
         if (e.target.classList.contains("checkbox")) {
-
             todo.checked = !todo.checked;
-            const container = e.target.closest(".todo-container");
-            const todos = todoManager.getProjectTodos(projectId);
+            const todos = getCurrentTodos(projectId);
             appView.renderTodos(container, todos);
         }
-
     });
 })();
 

@@ -4,6 +4,10 @@ const todoManager = (function () {
 
     const getAll = () => todos;
 
+    const getDone = () => {
+        return todos.filter(todo => todo.checked);
+    }
+
     const addProject = function (project) {
         projects.push(project);
     };
@@ -60,6 +64,7 @@ const todoManager = (function () {
         removeTodo,
         printTodos,
         getAll,
+        getDone,
     }
 })();
 
