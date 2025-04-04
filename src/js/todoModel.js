@@ -1,5 +1,4 @@
-const createTodo = function (title, description, dueDate, priority, projectId) {
-    let checked = false;
+const createTodo = function (title, description, dueDate, priority, projectId, checked=false) {
     return {
         title,
         description,

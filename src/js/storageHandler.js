@@ -33,7 +33,6 @@ const storageHandler = (function () {
         }
         localStorage.setItem("projects", JSON.stringify(projectsData));
         console.log("test");
-
         localStorage.setItem("todos", JSON.stringify(todos));
     };
 

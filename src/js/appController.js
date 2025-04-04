@@ -6,13 +6,11 @@ import { storageHandler } from "./storageHandler.js";
 
 const appController = (function () {
 
-    document
-        .querySelector("#clear")
-        .addEventListener("click", storageHandler.clearData);
-
     document.addEventListener("DOMContentLoaded", () => {
         if (!storageHandler.storageAvailable("localStorage")) return;
         if (!storageHandler.itemsStored()) return;
+        const projectContainer = document.querySelector(".project-container");
+        const todoSection = document.querySelector(".main-wrapper");
         activeCollection = collection.ALL;
         const projects = storageHandler.retrieveProjects();
         todoManager.setProjects(projects);
@@ -233,6 +231,7 @@ const appController = (function () {
 
         if (e.target.classList.contains("checkbox")) {
             todo.checked = !todo.checked;
+            safeData();
             const todos = getCurrentTodos(projectId);
             appView.renderTodos(container, todos);
         }
