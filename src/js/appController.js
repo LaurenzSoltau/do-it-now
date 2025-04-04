@@ -2,15 +2,40 @@ import appView from "./appView.js";
 import todoManager from "./todoManagerModel.js";
 import { createProject } from "./projectModel.js";
 import { createTodo } from "./todoModel.js";
+import { storageHandler } from "./storageHandler.js";
 
 const appController = (function () {
+
+    document
+        .querySelector("#clear")
+        .addEventListener("click", storageHandler.clearData);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        if (!storageHandler.storageAvailable("localStorage")) return;
+        if (!storageHandler.itemsStored()) return;
+        activeCollection = collection.ALL;
+        const projects = storageHandler.retrieveProjects();
+        todoManager.setProjects(projects);
+        appView.renderProjects(projectContainer, todoManager.getProjects());
+        const todos = storageHandler.retrieveTodos();
+        todoManager.setTodos(todos);
+        appView.renderCollectionTodos(todoSection, todoManager.getAll(), "All Todos");
+    });
+
+    function safeData() {
+        const projects = todoManager.getProjects();
+        const todos = todoManager.getAll();
+        storageHandler.safeData(projects, todos);
+    }
+
     const collection = {
         ALL: "all",
         TODAY: "today",
         DONE: "done",
         NONE: "none",
     };
-    let activeCollection = collection.NONE;
+
+    let activeCollection;
 
     function getCurrentTodos(projectId) {
         let todos;
@@ -42,11 +67,18 @@ const appController = (function () {
         if (e.target === createProjectForm) {
             const newProject = createProject(data.get("name"));
             todoManager.addProject(newProject);
+            safeData();
         }
         if (e.target === editProjectForm) {
             const projectId = editProjectForm.dataset.projectId;
             const project = todoManager.getProject(projectId);
             project.setName(data.get("name"));
+            const currentProjectId =
+                todoSection.querySelector(".todo-container").dataset.projectId;
+            if (projectId === currentProjectId) {
+                appView.renderProjectTodos(todoSection, project);
+            }
+            safeData();
         }
 
         appView.renderProjects(projectContainer, todoManager.getProjects());
@@ -91,6 +123,7 @@ const appController = (function () {
                 projectId
             );
             todoManager.addTodo(newTodo);
+            safeData();
         }
 
         if (e.target === editTodoForm) {
@@ -100,6 +133,7 @@ const appController = (function () {
             todo.description = description;
             todo.dueDate = dueDate;
             todo.priority = priority;
+            safeData();
         }
 
         const todoContainer = document.querySelector(".todo-container");
@@ -153,8 +187,10 @@ const appController = (function () {
         }
         if (e.target.classList.contains("project-delete-button")) {
             todoManager.removeProject(projectId);
+            safeData();
             appView.renderProjects(projectContainer, todoManager.getProjects());
-            const currentProjectId = todoSection.querySelector(".todo-container").dataset.projectId;
+            const currentProjectId =
+                todoSection.querySelector(".todo-container").dataset.projectId;
             if (currentProjectId === projectId) {
                 activeCollection = collection.ALL;
                 const todos = getCurrentTodos();
@@ -190,6 +226,7 @@ const appController = (function () {
 
         if (e.target.classList.contains("delete-todo")) {
             todoManager.removeTodo(todoId);
+            safeData();
             const todos = getCurrentTodos(projectId);
             appView.renderTodos(container, todos);
         }

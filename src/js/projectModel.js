@@ -1,6 +1,11 @@
-const createProject = function(name) {
+const createProject = function(name, _projectId) {
     let projectName = name;
-    const projectId = crypto.randomUUID();
+    let projectId;
+    if (!_projectId) {
+        projectId = crypto.randomUUID();
+    } else {
+        projectId = _projectId;
+    }
 
     const getName = () => projectName; 
     const setName = newName => projectName = newName;

@@ -1,10 +1,12 @@
 const { isToday } = require("date-fns");
 
 const todoManager = (function () {
-    const todos = [];
-    const projects = [];
+    let todos = [];
+    let projects = [];
 
     const getAll = () => todos;
+
+    const setTodos = _todos => todos = _todos;
 
     const getDone = () => {
         return todos.filter((todo) => todo.checked);
@@ -31,6 +33,10 @@ const todoManager = (function () {
     };
 
     const getProjects = () => projects;
+
+    const setProjects = (_projects) => {
+        projects = _projects;
+    };
 
     const getProject = (projectId) => {
         return projects.find((project) => project.getId() === projectId);
@@ -62,6 +68,7 @@ const todoManager = (function () {
         addProject,
         removeProject,
         getProjects,
+        setProjects,
         getProject,
         getProjectTodos,
         addTodo,
@@ -69,6 +76,7 @@ const todoManager = (function () {
         removeTodo,
         printTodos,
         getAll,
+        setTodos,
         getDone,
         getToday,
     };
