@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 const { isToday } = require("date-fns");
 
 const todoManager = (function () {
@@ -46,7 +47,7 @@ const todoManager = (function () {
         return todos.filter((todo) => todo.projectId === projectId);
     };
 
-    const addTodo = function (todo, projectId) {
+    const addTodo = function (todo) {
         todos.push(todo);
     };
 

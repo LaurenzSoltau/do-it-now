@@ -177,7 +177,7 @@ const appController = (function () {
                 todoManager.getProject(projectId)
             );
             dynamicAddTodoButton = document.querySelector(".add-todo");
-            dynamicAddTodoButton.addEventListener("click", (e) => {
+            dynamicAddTodoButton.addEventListener("click", () => {
                 createTodoForm.reset();
                 createTodoForm.dataset.projectId = projectId;
                 createTodoModal.show();

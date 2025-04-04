@@ -1,5 +1,4 @@
 import { createProject } from "./projectModel.js";
-import { createTodo } from "./todoModel.js";
 const storageHandler = (function () {
     const storageAvailable = function (type) {
         let storage;
